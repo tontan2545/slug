@@ -2,18 +2,19 @@ import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 import { toastStyles } from "@/styles/toast";
 import { Button } from "@/ui";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { BuiltInProviderType } from "next-auth/providers";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { BsGithub } from "react-icons/bs";
+import { BsGithub, BsGoogle } from "react-icons/bs";
 
 const Auth = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<BuiltInProviderType | null>(null);
 
-  const handleSignIn = async () => {
-    setLoading(true);
+  const handleSignIn = (provider: BuiltInProviderType) => async () => {
+    setLoading(provider);
     try {
-      await signIn("github", {
+      await signIn(provider, {
         callbackUrl: "/dash",
       });
     } catch (error) {
@@ -31,15 +32,26 @@ const Auth = () => {
     <div className="container mx-auto">
       <div className="mt-16 flex flex-col items-center justify-center px-4">
         <h1 className="mb-8 text-4xl">👋 Welcome</h1>
-        <Button
-          className="ml-4 bg-midnightLight"
-          onClick={handleSignIn}
-          isLoading={loading}
-          loadingText="Loading..."
-          icon={<BsGithub size={17} />}
-        >
-          Sign in with GitHub
-        </Button>
+        <div className="space-y-4">
+          <Button
+            className="ml-4 bg-midnightLight"
+            onClick={handleSignIn("github")}
+            isLoading={loading === "github"}
+            loadingText="Loading..."
+            icon={<BsGithub size={17} />}
+          >
+            Sign in with GitHub
+          </Button>
+          <Button
+            className="ml-4 bg-midnightLight"
+            onClick={handleSignIn("google")}
+            isLoading={loading === "google"}
+            loadingText="Loading..."
+            icon={<BsGoogle size={17} />}
+          >
+            Sign in with Google
+          </Button>
+        </div>
       </div>
     </div>
   );

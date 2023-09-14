@@ -1,8 +1,7 @@
 export default {
   title: "URL Shortener",
   titleTemplate: "%s - slug",
-  description:
-    "A URL shortener built with T3 Stack",
+  description: "A URL shortener built with T3 Stack",
   defaultTitle: "slug",
   additionalLinkTags: [
     {
@@ -49,10 +48,5 @@ export default {
         type: "image/jpg",
       },
     ],
-  },
-  twitter: {
-    handle: "@pheralb_",
-    site: "@pheralb_",
-    cardType: "summary_large_image",
   },
 };

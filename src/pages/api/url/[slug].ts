@@ -6,7 +6,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!slug || typeof slug !== "string") {
     return res.status(400).json({
-      error: "[X] Error: Missing slug? Remember that urls start like this: /u/yourLink",
+      error:
+        "[X] Error: Missing slug? Remember that urls start like this: /u/yourLink",
     });
   }
 
@@ -20,7 +21,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!data) {
     return res.status(404).json({
-      error: "[X] Error: Link not found or removed. Go to slug.vercel.app and create a new link.",
+      error:
+        "[X] Error: Link not found or removed. Go to slug.vercel.app and create a new link.",
     });
   }
 

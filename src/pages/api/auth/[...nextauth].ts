@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 // Prisma adapter for NextAuth =>
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -21,8 +22,29 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+      profile(profile) {
+        console.log(profile);
+        return {
+          id: profile.email,
+          name: profile.email,
+          username: profile.email,
+          email: profile.email,
+          image: profile.picture,
+        };
+      },
+    }),
   ],
-  secret: env.NEXTAUTH_SECRET || "",
+  secret: env.NEXTAUTH_SECRET ?? "",
   adapter: PrismaAdapter(prisma),
   callbacks: {
     session: ({ session, user }) => ({

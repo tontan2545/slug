@@ -1,4 +1,3 @@
-import Footer from "@/components/footer";
 import Header from "@/components/header";
 
 interface LayoutProps {
@@ -10,7 +9,6 @@ const Layout = (props: LayoutProps) => {
     <>
       <Header />
       <div className="min-h-auto">{props.children}</div>
-      <Footer />
     </>
   );
 };

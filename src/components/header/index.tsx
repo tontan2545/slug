@@ -6,24 +6,17 @@ import CommandMenu from "../command";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-40 w-full py-4 bg-midnight duration-300">
-      <div className="flex container pl-4 pr-4 md:pl-0 md:pr-0 items-center justify-between mx-auto">
+    <header className="sticky top-0 z-40 w-full bg-midnight py-4 duration-300">
+      <div className="container mx-auto flex items-center justify-between pl-4 pr-4 md:pl-0 md:pr-0">
         <Link href="/">
-          <div className="flex items-center cursor-pointer text-white hover:text-gray-300 transition-all">
-            <img src="/img/logo.png" alt="Logo" className="w-8 h-8" />
-            <h1 className="text-xl ml-2 mr-2">slug</h1>
+          <div className="flex cursor-pointer items-center text-white transition-all hover:text-gray-300">
+            <img src="/img/logo.png" alt="Logo" className="h-8 w-8" />
+            <h1 className="ml-2 mr-2 text-xl">Caerus</h1>
           </div>
         </Link>
         <div className="flex items-center space-x-6">
           <Auth />
           <CommandMenu />
-          <a
-            href="https://github.com/pheralb/slug"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <IconButton icon={<BsGithub size={20} />} />
-          </a>
         </div>
       </div>
     </header>

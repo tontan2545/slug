@@ -19,12 +19,12 @@ const Button = (props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
       type={props.type}
       disabled={props.disabled || props.isLoading}
       onClick={props.onClick}
-      className={`flex items-center rounded-md px-3 p-2 hover:transition duration-200 ease-in-out outline-none ${
+      className={`flex items-center rounded-md p-2 px-5 outline-none duration-200 ease-in-out hover:transition ${
         props.className
-      } focus:ring-1 focus:ring-offset-1 focus:ring-offset-stone-800 focus:ring-gray-500 hover:text-gray-300 
+      } hover:text-gray-300 focus:ring-1 focus:ring-gray-500 focus:ring-offset-1 focus:ring-offset-stone-800 
       ${
         props.disabled || props.isLoading
-          ? "bg-zinc-900 cursor-not-allowed"
+          ? "cursor-not-allowed bg-zinc-900"
           : "bg-zinc-800"
       }`}
     >

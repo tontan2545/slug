@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { BiBox, BiCommand, BiMessageSquareEdit, BiPlus } from "react-icons/bi";
-import { BsGithub, BsTwitter } from "react-icons/bs";
 import { Command, CommandInput, CommandList, CommandOption } from "superkey";
 
 const data = [
@@ -22,18 +21,6 @@ const data = [
     name: "Report a bug",
     href: "https://github.com/pheralb/slug/issues/new",
     icon: <BiMessageSquareEdit />,
-  },
-  {
-    id: 4,
-    name: "Repository",
-    href: "https://github.com/pheralb/slug",
-    icon: <BsGithub />,
-  },
-  {
-    id: 5,
-    name: "Twitter",
-    href: "https://twitter.com/pheralb_",
-    icon: <BsTwitter />,
   },
 ];
 
