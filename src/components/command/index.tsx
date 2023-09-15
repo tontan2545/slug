@@ -7,13 +7,13 @@ const data = [
   {
     id: 1,
     name: "Create new link",
-    href: "/dash/create",
+    href: "/dashboard/create",
     icon: <BiPlus />,
   },
   {
     id: 2,
     name: "Dashboard",
-    href: "/dash",
+    href: "/dashboard",
     icon: <BiBox />,
   },
   {

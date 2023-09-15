@@ -16,7 +16,7 @@ export const linkRouter = router({
       const newLink = ctx.prisma.link.create({
         data: {
           ...input,
-          creatorId: ctx.session?.user?.id,
+          userId: ctx.session?.user?.id,
         },
       });
       return newLink;
@@ -28,7 +28,7 @@ export const linkRouter = router({
       where: { slug: input.slug },
       data: {
         ...input,
-        creatorId: ctx.session?.user?.id,
+        userId: ctx.session?.user?.id,
       },
     });
     return editedLink;
@@ -48,7 +48,7 @@ export const linkRouter = router({
   allLinks: publicProcedure.input(FilterLinkSchema).query(({ ctx, input }) => {
     return ctx.prisma.link?.findMany({
       where: {
-        creatorId: ctx.session?.user?.id,
+        userId: ctx.session?.user?.id,
         AND: input.filter
           ? [
               {

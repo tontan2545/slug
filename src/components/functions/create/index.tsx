@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { trpc } from "@/utils/trpc";
 import { CreateLinkInput } from "@/schema/link.schema";
@@ -20,11 +20,12 @@ const Create = () => {
     formState: { errors },
   } = useForm<CreateLinkInput>();
   const [loading, setLoading] = useState(false);
+  const [hostUrl, setHostUrl] = useState("");
   const router = useRouter();
 
   const { mutate } = trpc.links.createLink.useMutation({
     onSuccess: () => {
-      router.push(`/dash`);
+      router.push(`/dashboard`);
       setLoading(false);
       toast("Link created successfully", {
         icon: "🥳",
@@ -35,7 +36,8 @@ const Create = () => {
       setLoading(false);
       setError("slug", {
         type: "manual",
-        message: "Slug already exists. Please try another one or click 'Randomize' button.",
+        message:
+          "Slug already exists. Please try another one or click 'Randomize' button.",
       });
     },
   });
@@ -49,6 +51,12 @@ const Create = () => {
       });
       return;
     }
+
+    // check if values.url have https:// or http://, if not then add https://
+    if (!values.url.includes("https://") && !values.url.includes("http://")) {
+      values.url = `https://${values.url}`;
+    }
+
     setLoading(true);
     mutate(values);
   };
@@ -59,10 +67,30 @@ const Create = () => {
     setValue("slug", randomSlug);
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") setHostUrl(window.location.origin);
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-5">
-        <label htmlFor="url">Enter the URL here:</label>
+        <label htmlFor="url">Link name:</label>
+        <input
+          id="url"
+          type="text"
+          placeholder="Link name"
+          className="mt-1 w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
+          {...register("name", {
+            required: {
+              value: true,
+              message: "Please enter a name.",
+            },
+          })}
+        />
+        {errors.name && <Alert className="mt-2">{errors.name.message}</Alert>}
+      </div>
+      <div className="mb-5">
+        <label htmlFor="url">Link URL:</label>
         <input
           id="url"
           type="text"
@@ -76,41 +104,36 @@ const Create = () => {
             minLength: {
               value: 8,
               message:
-                "Please enter a valid URL. It should be at least 8 characters long.",
-            },
-            pattern: {
-              value: /^https?:\/\//i,
-              message:
-                "Please enter a valid URL. It should start with https://.",
+                "Please enter a valid URL. It should be at least 8 characters long",
             },
           })}
         />
         {errors.url && <Alert className="mt-2">{errors.url.message}</Alert>}
       </div>
       <div className="mb-5">
-        <label htmlFor="slug">Custom slug:</label>
-        <p className="text-gray-500">https://slug.vercel.app/s/</p>
-        <div className="mt-1 flex items-center justify-between">
+        <label htmlFor="slug">Custom link path:</label>
+        <div className="flex w-full items-center justify-between space-x-2">
+          <p>{`${hostUrl}/`}</p>
           <input
             id="slug"
             type="text"
-            placeholder="Custom slug"
+            placeholder="custom-path"
             className="w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
             {...register("slug", {
               required: {
                 value: true,
-                message: "Please enter a custom slug or generate a random.",
+                message: "Please enter a custom path or generate randomly",
               },
               pattern: {
                 value: /^[a-zA-Z0-9_-]+$/i,
                 message:
-                  "Please enter a valid slug without blank spaces or special characters.",
+                  "Please enter a valid path without blank spaces or special characters",
               },
             })}
           />
           <Button
             onClick={handleGenerateRandomSlug}
-            className="ml-2 bg-midnightLight"
+            className="h-full bg-zinc-900"
             icon={<BiRefresh size={17} />}
           >
             Randomize
@@ -126,14 +149,16 @@ const Create = () => {
           {...register("description")}
         />
       </div>
-      <Button
-        type="submit"
-        isLoading={loading}
-        loadingText="Creating your link..."
-        icon={<BiRocket size={18} />}
-      >
-        Create your link
-      </Button>
+      <div className="flex justify-end">
+        <Button
+          type="submit"
+          isLoading={loading}
+          loadingText="Creating your link..."
+          icon={<BiRocket size={18} />}
+        >
+          Create your link
+        </Button>
+      </div>
     </form>
   );
 };

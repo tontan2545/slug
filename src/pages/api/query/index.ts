@@ -23,10 +23,11 @@ async function createNewLink(req: NextApiRequest, res: NextApiResponse) {
     try {
       const newLink = await prisma.link?.create({
         data: {
+          name: body.name,
           slug: body.slug,
           url: body.url,
           description: body.description,
-          creatorId: body.creatorId,
+          userId: body.creatorId,
         },
       });
       return res.status(200).json(newLink);

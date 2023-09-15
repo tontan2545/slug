@@ -11,12 +11,13 @@ import { toastStyles } from "@/styles/toast";
 
 interface EditProps {
   id: number;
+  name: string;
   slug: string;
   url: string;
   description: string;
 }
 
-const Edit = (props: EditProps) => {
+const Edit = ({ description, id, name, slug, url }: EditProps) => {
   const {
     handleSubmit,
     setValue,
@@ -43,10 +44,15 @@ const Edit = (props: EditProps) => {
   });
 
   const onSubmit = (values: EditLinkInput) => {
-    setValue("slug", props.slug);
     setLoading(true);
+
+    if (!values.url.includes("https://") && !values.url.includes("http://")) {
+      values.url = `https://${values.url}`;
+    }
+
     mutate({
-      slug: props.slug,
+      name: values.name,
+      slug: slug,
       url: values.url,
       description: values.description,
     });
@@ -60,27 +66,34 @@ const Edit = (props: EditProps) => {
         </Alert>
       )}
       <div className="mb-5">
-        <label htmlFor="url">Enter the new URL:</label>
+        <label htmlFor="url">Link Name:</label>
+        <input
+          id="name"
+          type="text"
+          placeholder="Link name"
+          defaultValue={name}
+          className="mt-1 w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
+          {...register("name", {
+            required: {
+              value: true,
+              message: "Please enter a URL.",
+            },
+          })}
+        />
+        {errors.name && <Alert className="mt-2">{errors.name.message}</Alert>}
+      </div>
+      <div className="mb-5">
+        <label htmlFor="url">Link URL:</label>
         <input
           id="url"
           type="text"
           placeholder="https://"
-          defaultValue={props.url}
+          defaultValue={url}
           className="mt-1 w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
           {...register("url", {
             required: {
               value: true,
               message: "Please enter a URL.",
-            },
-            minLength: {
-              value: 8,
-              message:
-                "Please enter a valid URL. It should be at least 8 characters long.",
-            },
-            pattern: {
-              value: /^https?:\/\//i,
-              message:
-                "Please enter a valid URL. It should start with http:// or https://",
             },
           })}
         />
@@ -91,13 +104,10 @@ const Edit = (props: EditProps) => {
         <textarea
           id="description"
           className="mt-1 w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
-          defaultValue={props.description}
+          defaultValue={description}
           {...register("description")}
         />
       </div>
-      <Alert>
-        <p>This action is irreversible.</p>
-      </Alert>
       <div className="mt-5 flex justify-end">
         <Button
           type="submit"

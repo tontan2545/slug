@@ -40,7 +40,10 @@ const Dashboard = () => {
   }
 
   const filteredLinks = linksData?.filter((link) => {
-    return link.slug.toLowerCase().includes(searchLinks.toLowerCase());
+    return (
+      link.slug.toLowerCase().includes(searchLinks.toLowerCase()) ||
+      link.name.toLowerCase().includes(searchLinks.toLowerCase())
+    );
   });
 
   if (!linksData) {
@@ -75,7 +78,10 @@ const Dashboard = () => {
         <div className="mt-5 flex flex-col items-center justify-center">
           <BiRocket className="mb-4 text-gray-400" size={64} />
           <p className="mb-4 text-xl">Lets create your first link!</p>
-          <LinkRoute href="/dash/create" className="border border-gray-400">
+          <LinkRoute
+            href="/dashboard/create"
+            className="border border-gray-400"
+          >
             Create a link
           </LinkRoute>
         </div>
@@ -91,13 +97,7 @@ const Dashboard = () => {
       {links && (
         <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filteredLinks?.map((link) => (
-            <Card
-              key={link.id}
-              id={link.id}
-              url={link.url}
-              description={link.description || "No description."}
-              slug={link.slug}
-            />
+            <Card key={link.id} link={link} />
           ))}
         </div>
       )}

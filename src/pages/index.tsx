@@ -16,8 +16,8 @@ const Home: NextPage = () => {
         </h3>
       </Up>
       <Up delay={0.4}>
-        <div className="flex">
-          <LinkRoute href="/dash">
+        <div className="flex rounded-md px-1 hover:bg-zinc-800">
+          <LinkRoute href="/dashboard">
             <BiRocket className="mr-2" />
             Get Started
           </LinkRoute>

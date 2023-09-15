@@ -15,7 +15,7 @@ const Auth = () => {
     setLoading(provider);
     try {
       await signIn(provider, {
-        callbackUrl: "/dash",
+        callbackUrl: "/dashboard",
       });
     } catch (error) {
       toast(
@@ -32,9 +32,9 @@ const Auth = () => {
     <div className="container mx-auto">
       <div className="mt-16 flex flex-col items-center justify-center px-4">
         <h1 className="mb-8 text-4xl">👋 Welcome</h1>
-        <div className="space-y-4">
+        <div className="flex flex-col items-center justify-center space-y-4">
           <Button
-            className="ml-4 bg-midnightLight"
+            className="ml-4 w-full justify-center bg-midnightLight"
             onClick={handleSignIn("github")}
             isLoading={loading === "github"}
             loadingText="Loading..."
@@ -43,7 +43,7 @@ const Auth = () => {
             Sign in with GitHub
           </Button>
           <Button
-            className="ml-4 bg-midnightLight"
+            className="ml-4 w-full justify-center bg-midnightLight"
             onClick={handleSignIn("google")}
             isLoading={loading === "google"}
             loadingText="Loading..."
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (session) {
     return {
       redirect: {
-        destination: "/dash",
+        destination: "/dashboard",
         permanent: false,
       },
     };

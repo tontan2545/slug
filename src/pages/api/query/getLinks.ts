@@ -21,7 +21,7 @@ async function getLinks(req: NextApiRequest, res: NextApiResponse) {
     try {
       const links = await prisma.link?.findMany({
         where: {
-          creatorId: session?.user?.id,
+          userId: session?.user?.id,
         },
       });
       return res.status(200).json(links);

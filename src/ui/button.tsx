@@ -9,6 +9,7 @@ export interface ButtonProps {
   loadingText?: string;
   icon?: React.ReactNode;
   children?: React.ReactNode;
+  variant?: "contained" | "text";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -21,12 +22,13 @@ const Button = (props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
       onClick={props.onClick}
       className={`flex items-center rounded-md p-2 px-5 outline-none duration-200 ease-in-out hover:transition ${
         props.className
-      } hover:text-gray-300 focus:ring-1 focus:ring-gray-500 focus:ring-offset-1 focus:ring-offset-stone-800 
+      } hover:bg-zinc-800 hover:text-gray-300 focus:ring-1 focus:ring-gray-500 focus:ring-offset-1 focus:ring-offset-stone-800 
       ${
         props.disabled || props.isLoading
           ? "cursor-not-allowed bg-zinc-900"
           : "bg-zinc-800"
-      }`}
+      }
+      `}
     >
       {props.isLoading ? (
         <>
