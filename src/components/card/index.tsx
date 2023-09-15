@@ -7,13 +7,22 @@ import Modal from "@/ui/modal";
 import Edit from "../functions/edit";
 import Delete from "../functions/delete";
 
-import { CardProps } from "./interface";
 import { toastStyles } from "@/styles/toast";
+import { Link } from "@prisma/client";
+import { useHostUrl } from "@/hooks/useHostURL";
 
-const Card = (props: CardProps) => {
+import Image from "next/image";
+
+type Props = {
+  link: Link;
+  className?: React.ComponentProps<"div">["className"];
+};
+
+const Card = ({ link, ...props }: Props) => {
+  const { id, name, slug, url, description } = link;
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-
+  const { hostUrl, redirectUrl } = useHostUrl(slug);
   const handleEditModal = () => {
     setEditModal(!editModal);
   };
@@ -41,26 +50,33 @@ const Card = (props: CardProps) => {
     <div
       className={`flex justify-between rounded-lg border border-zinc-800 bg-midnight  p-4 transition-all hover:shadow-lg ${props.className}`}
     >
-      <div className="truncate">
-        <div className="flex items-center">
+      <div className="space-y-1 truncate">
+        <div className="flex items-center space-x-2">
+          <a target="_blank" rel="noreferrer" href={redirectUrl}>
+            <img
+              src={`${url}/favicon.ico`}
+              alt={`${url}-logo`}
+              className="h-5 w-5"
+            />
+          </a>
           <a
             className="text-xl text-gray-100 transition-all hover:text-gray-300"
             target="_blank"
             rel="noreferrer"
-            href={`https://slug.vercel.app/s/${props.slug}`}
+            href={redirectUrl}
           >
-            /s/{props.slug}
+            {name}
           </a>
           <IconButton
             icon={<BiCopy />}
-            className="ml-1 p-1 text-gray-500 transition-colors duration-200 hover:text-gray-200"
-            onClick={() =>
-              copyToClipboard(`https://slug.vercel.app/s/${props.slug}`)
-            }
+            className="p-1 text-gray-500 transition-colors duration-200 hover:text-gray-200"
+            onClick={() => copyToClipboard(redirectUrl)}
           />
         </div>
-        <p className="mb-2 text-gray-500">{props.url}</p>
-        <p className="text-gray-400">{props.description}</p>
+        <div className="flex space-y-2">
+          <p className="text-gray-500">{redirectUrl}</p>
+          <p className="text-gray-400">{description}</p>
+        </div>
       </div>
       <div>
         <Dropdown
@@ -70,9 +86,7 @@ const Card = (props: CardProps) => {
         >
           <DropdownItem
             icon={<BiCopy size={17} />}
-            onClick={() =>
-              copyToClipboard(`https://slug.vercel.app/s/${props.slug}`)
-            }
+            onClick={() => copyToClipboard(redirectUrl)}
           >
             Copy
           </DropdownItem>
@@ -87,23 +101,24 @@ const Card = (props: CardProps) => {
           </DropdownItem>
         </Dropdown>
         <Modal
-          title={`Edit: /s/${props.slug}`}
+          title={`Edit: /${slug}`}
           open={editModal}
           close={handleEditModal}
         >
           <Edit
-            id={props.id}
-            slug={props.slug}
-            url={props.url}
-            description={props.description}
+            id={id}
+            name={name}
+            slug={slug}
+            url={url}
+            description={description || ""}
           />
         </Modal>
         <Modal
-          title={`Delete: /s/${props.slug}`}
+          title={`Delete: /s/${slug}`}
           open={deleteModal}
           close={handleDeleteModal}
         >
-          <Delete id={props.id} />
+          <Delete id={id} />
         </Modal>
       </div>
     </div>
