@@ -8,7 +8,7 @@
 
 <p></p>
 
-<a href="https://slug.vercel.app/dash/create">🚀 Short link</a>
+<a href="https://slug.vercel.app/dashboard/create">🚀 Short link</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
 <a href="#-getting-started">🤝 Contribute</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
@@ -100,6 +100,7 @@ NEXTAUTH_URL:
 ### 🔑 How to get environment variables:
 
 **Planetscale database:**
+
 - [Create a new database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#getting-started-planet-scale-dashboard).
 - [Create a dev branch](https://planetscale.com/docs/onboarding/branching-and-deploy-requests#create-a-dev-branch).
 - [In the dev branch, click on "Connect" and select "Prisma". Now you have the DATABASE_URL](https://planetscale.com/docs/concepts/connection-strings#creating-a-password).
@@ -107,13 +108,15 @@ NEXTAUTH_URL:
 > 🚧 The environment variable in the dev branch is not the same as main. When you deploy your app to production, in the environment variables change DATABASE_URL to the main variable.
 
 **Github OAuth:**
+
 - [Click here to create new Github OAuth app](https://github.com/settings/applications/new).
 - Go to "Client secrets" and generate new client secret and and paste it into GITHUB_CLIENT_SECRET env.
 - Copy the Client ID and paste it into GITHUB_ID env.
 
 **Next Auth:**
-- NEXTAUTH_SECRET: ``mykey123`` for example.
-- NEXTAUTH_URL: ``http://localhost:3000/``.
+
+- NEXTAUTH_SECRET: `mykey123` for example.
+- NEXTAUTH_URL: `http://localhost:3000/`.
 
 5. Ready 🥳, now run:
 
