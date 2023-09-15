@@ -56,10 +56,10 @@ const Auth = () => {
       className="bg-transparent"
       icon={<BiHash size={18} />}
     >
-      <Link href="/dash/create">
+      <Link href="/dashboard/create">
         <DropdownItem icon={<BiPlus size={17} />}>Create new link</DropdownItem>
       </Link>
-      <Link href="/dash">
+      <Link href="/dashboard">
         <DropdownItem icon={<BiBox size={17} />}>Dashboard</DropdownItem>
       </Link>
       <a
