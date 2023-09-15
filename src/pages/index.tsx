@@ -1,8 +1,14 @@
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+} from "next";
 
 import Up from "@/motions/up";
 import { BiRocket } from "react-icons/bi";
 import LinkRoute from "@/ui/linkRoute";
+import { useEffect } from "react";
+import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 const Home: NextPage = () => {
   return (
@@ -25,6 +31,25 @@ const Home: NextPage = () => {
       </Up>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 };
 
 export default Home;
