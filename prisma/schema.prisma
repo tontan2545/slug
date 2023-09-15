@@ -8,17 +8,36 @@ datasource db {
     relationMode = "prisma"
 }
 
-model link {
-    id          Int      @id @default(autoincrement())
-    url         String   @db.Text
-    slug        String   @unique
+model Link {
+    id          Int         @id @default(autoincrement())
+    name        String
+    url         String      @db.Text
+    slug        String      @unique
     description String?
-    createdAt   DateTime @default(now())
-    createdBy   User?    @relation(fields: [creatorId], references: [id])
-    creatorId   String
+    createdAt   DateTime    @default(now()) @map("created_at")
+    user        User?       @relation(fields: [userId], references: [id])
+    userId      String      @map("user_id")
+    Analytics   Analytics[]
 
     @@index(slug)
-    @@index([creatorId])
+    @@index([userId])
+    @@map("link")
+}
+
+model Analytics {
+    id        Int      @id @default(autoincrement())
+    linkId    Int      @map("link_id")
+    createdAt DateTime @default(now()) @map("created_at")
+    link      Link     @relation(fields: [linkId], references: [id])
+    agent     String?
+    country   String?
+    city      String?
+    region    String?
+    continent String?
+    ip        String?
+
+    @@index([linkId])
+    @@map("analytics")
 }
 
 model Account {
@@ -55,11 +74,11 @@ model User {
     name          String?
     username      String?
     email         String?   @unique
-    emailVerified DateTime?
+    emailVerified DateTime? @map("email_verified")
     image         String?
     accounts      Account[]
     sessions      Session[]
-    links         link[]
+    links         Link[]
 }
 
 model VerificationToken {
