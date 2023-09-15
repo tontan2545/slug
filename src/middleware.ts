@@ -1,7 +1,7 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest, ev: NextFetchEvent) {
-
+  console.log(req.nextUrl.pathname);
   // Get pathname:
   const slug = req.nextUrl.pathname.split("/").pop();
 
@@ -22,5 +22,6 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
 }
 
 export const config = {
-  matcher: "/s/:slug*",
+  matcher:
+    "/((?!api|_next/static|_next/image|favicon.ico|dashboard|auth|img|fonts).*)",
 };
