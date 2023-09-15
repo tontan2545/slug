@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "slug",
+  "name": "URL Shortener",
   "description": "A URL shortener built with T3 Stack",
-  "short_name": "slug",
+  "short_name": "url-shortener",
   "icons": [
     {
       "src": "/img/icon-192x192.png",

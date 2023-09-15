@@ -1,8 +1,8 @@
 export default {
   title: "URL Shortener",
-  titleTemplate: "%s - slug",
+  titleTemplate: "%s - URL Shortener",
   description: "A URL shortener built with T3 Stack",
-  defaultTitle: "slug",
+  defaultTitle: "URL Shortnner",
   additionalLinkTags: [
     {
       rel: "icon",
@@ -36,8 +36,8 @@ export default {
     },
   ],
   openGraph: {
-    site_name: "slug",
-    url: "https://slug.vercel.app/",
+    site_name: "URL Shortner",
+    url: "https://go.nkaewamporn.com/",
     type: "website",
     locale: "en_IE",
     images: [
