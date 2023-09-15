@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { BiCopy, BiEdit, BiSlider, BiTrash } from "react-icons/bi";
 import IconButton from "@/ui/iconButton";
@@ -46,6 +46,17 @@ const Card = ({ link, ...props }: Props) => {
     });
   };
 
+  const getFavicon = (url: string) => {
+    try {
+      const urlObj = new URL(url);
+      return `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const faviconUrl = useMemo(() => getFavicon(url), [url]);
+
   return (
     <div
       className={`flex justify-between rounded-lg border border-zinc-800 bg-midnight  p-4 transition-all hover:shadow-lg ${props.className}`}
@@ -53,11 +64,9 @@ const Card = ({ link, ...props }: Props) => {
       <div className="space-y-1 truncate">
         <div className="flex items-center space-x-2">
           <a target="_blank" rel="noreferrer" href={redirectUrl}>
-            <img
-              src={`${url}/favicon.ico`}
-              alt={`${url}-logo`}
-              className="h-5 w-5"
-            />
+            {faviconUrl && (
+              <img src={faviconUrl} alt={`${url}-logo`} className="h-5 w-5" />
+            )}
           </a>
           <a
             className="text-xl text-gray-100 transition-all hover:text-gray-300"
