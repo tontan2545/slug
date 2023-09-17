@@ -112,32 +112,34 @@ const Create = () => {
       </div>
       <div className="mb-5">
         <label htmlFor="slug">Custom link path:</label>
-        <div className="flex w-full items-center justify-between space-x-2">
-          <p>{`${hostUrl}/`}</p>
-          <input
-            id="slug"
-            type="text"
-            placeholder="custom-path"
-            className="w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
-            {...register("slug", {
-              required: {
-                value: true,
-                message: "Please enter a custom path or generate randomly",
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9_-]+$/i,
-                message:
-                  "Please enter a valid path without blank spaces or special characters",
-              },
-            })}
-          />
-          <Button
+        <div className="flex w-full flex-col items-center justify-between gap-2 sm:flex-row">
+          <div className="flex w-full items-center justify-between space-x-2">
+            <p>{`${hostUrl}/`}</p>
+            <input
+              id="slug"
+              type="text"
+              placeholder="custom-path"
+              className="w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
+              {...register("slug", {
+                required: {
+                  value: true,
+                  message: "Please enter a custom path or generate randomly",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9_-]+$/i,
+                  message:
+                    "Please enter a valid path without blank spaces or special characters",
+                },
+              })}
+            />
+          </div>
+          {/* <Button
             onClick={handleGenerateRandomSlug}
-            className="h-full bg-zinc-900"
+            className="h-full w-full justify-center bg-zinc-900"
             icon={<BiRefresh size={17} />}
           >
             Randomize
-          </Button>
+          </Button> */}
         </div>
         {errors.slug && <Alert className="mt-2">{errors.slug.message}</Alert>}
       </div>
