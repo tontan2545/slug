@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { BiCopy, BiEdit, BiSlider, BiTrash } from "react-icons/bi";
 import IconButton from "@/ui/iconButton";
 import { Dropdown, DropdownItem } from "@/ui/dropdown";
 import Modal from "@/ui/modal";
+import getRootDomain from "get-root-domain";
 import Edit from "../functions/edit";
 import Delete from "../functions/delete";
 
@@ -22,7 +23,8 @@ const Card = ({ link, ...props }: Props) => {
   const { id, name, slug, url, description } = link;
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { hostUrl, redirectUrl } = useHostUrl(slug);
+  const [isImageError, setIsImageError] = useState(false);
+  const { redirectUrl } = useHostUrl(slug);
   const handleEditModal = () => {
     setEditModal(!editModal);
   };
@@ -46,16 +48,12 @@ const Card = ({ link, ...props }: Props) => {
     });
   };
 
-  const getFavicon = (url: string) => {
-    try {
-      const urlObj = new URL(url);
-      return `${urlObj.protocol}//${urlObj.hostname}/favicon.ico`;
-    } catch (error) {
-      return null;
-    }
+  const onImageError = (e: any) => {
+    setIsImageError(true);
   };
 
-  const faviconUrl = useMemo(() => getFavicon(url), [url]);
+  const urlObj = new URL(url);
+  const faviconUrl = `${urlObj.protocol}//${getRootDomain(urlObj)}/favicon.ico`;
 
   return (
     <div
@@ -64,8 +62,13 @@ const Card = ({ link, ...props }: Props) => {
       <div className="space-y-1 truncate">
         <div className="flex items-center space-x-2">
           <a target="_blank" rel="noreferrer" href={redirectUrl}>
-            {faviconUrl && (
-              <img src={faviconUrl} alt={`${url}-logo`} className="h-5 w-5" />
+            {!isImageError && (
+              <img
+                src={faviconUrl}
+                alt={`${url}-logo`}
+                className="h-5 w-5"
+                onError={onImageError}
+              />
             )}
           </a>
           <a
