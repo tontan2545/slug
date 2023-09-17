@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { BsGithub } from "react-icons/bs";
 import Auth from "@/components/auth";
-import IconButton from "@/ui/iconButton";
-import CommandMenu from "../command";
 
 const Header = () => {
   return (
@@ -16,7 +13,6 @@ const Header = () => {
         </Link>
         <div className="flex items-center space-x-6">
           <Auth />
-          <CommandMenu />
         </div>
       </div>
     </header>

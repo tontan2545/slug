@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/ui";
 import { signOut, useSession } from "next-auth/react";
-import {
-  BiBox,
-  BiExit,
-  BiHash,
-  BiMessageSquareEdit,
-  BiPlus,
-} from "react-icons/bi";
+import { BiBox, BiExit, BiMessageSquareEdit, BiPlus } from "react-icons/bi";
+import { AiFillCaretDown } from "react-icons/ai";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { Dropdown, DropdownItem } from "@/ui/dropdown";
 import LinkRoute from "@/ui/linkRoute";
 import { toastStyles } from "@/styles/toast";
+import Image from "next/image";
 
 const Auth = () => {
   const { data: session, status } = useSession();
@@ -52,9 +48,20 @@ const Auth = () => {
 
   return (
     <Dropdown
-      title={session?.user?.username}
       className="bg-transparent"
-      icon={<BiHash size={18} />}
+      menuButtonComponent={
+        <div className="flex items-center justify-center space-x-2">
+          <div className="relative h-10 w-10">
+            <Image
+              src={session?.user?.image as string}
+              alt="avatar"
+              className="rounded-full p-1"
+              fill
+            />
+          </div>
+          <AiFillCaretDown size={15} />
+        </div>
+      }
     >
       <Link href="/dashboard/create">
         <DropdownItem icon={<BiPlus size={17} />}>Create new link</DropdownItem>
