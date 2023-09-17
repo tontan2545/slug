@@ -86,7 +86,7 @@ const Card = ({ link, ...props }: Props) => {
           />
         </div>
         <div className="flex space-y-2">
-          <p className="text-gray-500">{redirectUrl}</p>
+          <p className="text-gray-500">{`/${slug}`}</p>
           <p className="text-gray-400">{description}</p>
         </div>
       </div>

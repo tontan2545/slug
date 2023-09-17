@@ -7,7 +7,6 @@ import type {
 import Up from "@/motions/up";
 import { BiRocket } from "react-icons/bi";
 import LinkRoute from "@/ui/linkRoute";
-import { useEffect } from "react";
 import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 const Home: NextPage = () => {
@@ -42,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
       redirect: {
         destination: "/dashboard",
-        permanent: false,
+        permanent: true,
       },
     };
   }
