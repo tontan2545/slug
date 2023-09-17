@@ -33,8 +33,9 @@ model Analytics {
     country   String?
     city      String?
     region    String?
-    continent String?
     ip        String?
+    latitude  String?
+    longitude String?
 
     @@index([linkId])
     @@map("analytics")

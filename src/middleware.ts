@@ -16,6 +16,23 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Convert data to JSON:
   const dataToJson = await data.json();
 
+  await fetch(`${req.nextUrl.origin}/api/analytics`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ip: req.ip,
+      linkId: dataToJson.id,
+      agent: req.headers.get("user-agent"),
+      country: req.geo?.country,
+      region: req.geo?.region,
+      city: req.geo?.city,
+      latitude: req.geo?.latitude,
+      longitude: req.geo?.longitude,
+    }),
+  });
+
   if (data?.url) {
     return NextResponse.redirect(new URL(dataToJson.url));
   }
