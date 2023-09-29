@@ -74,7 +74,7 @@ const Card = ({ link, ...props }: Props) => {
           <a
             className="text-xl text-gray-100 transition-all hover:text-gray-300"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             href={redirectUrl}
           >
             {name}
